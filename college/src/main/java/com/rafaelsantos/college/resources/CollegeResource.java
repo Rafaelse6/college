@@ -2,13 +2,14 @@ package com.rafaelsantos.college.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,10 +28,8 @@ public class CollegeResource {
 	
 	@GetMapping
 	public ResponseEntity<List<CollegeDTO>> findAll(){
-		List<College> list = service.findAll();
-		List<CollegeDTO> listDto = list.stream().map(x -> new CollegeDTO(x)).collect(Collectors.toList());
-		
-		return ResponseEntity.ok().body(listDto);
+		List<CollegeDTO> list = service.findAll();
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -40,11 +39,26 @@ public class CollegeResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<CollegeDTO> insert(@RequestBody CollegeDTO dto){
-		dto = service.insert(dto);
+	public ResponseEntity<CollegeDTO> insert(@RequestBody CollegeDTO objDto){
+		objDto = service.insert(objDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(dto.getId()).toUri();
+				.buildAndExpand(objDto.getId()).toUri();
 		
-		return ResponseEntity.created(uri).body(dto);
+		return ResponseEntity.created(uri).build();
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Void> update(@RequestBody CollegeDTO objDto, @PathVariable String id){
+		College obj = service.fromDto(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable String id){
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }

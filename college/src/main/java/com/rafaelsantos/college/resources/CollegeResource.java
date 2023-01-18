@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rafaelsantos.college.domain.College;
+import com.rafaelsantos.college.domain.Department;
 import com.rafaelsantos.college.domain.dto.CollegeDTO;
 import com.rafaelsantos.college.services.CollegeService;
 
@@ -36,6 +37,12 @@ public class CollegeResource {
 	public ResponseEntity<CollegeDTO> findById(@PathVariable String id){
 		College obj = service.findById(id);
 		return ResponseEntity.ok().body(new CollegeDTO(obj));
+	}
+	
+	@GetMapping(value = "/{id}/departments")
+	public ResponseEntity<List<Department>> findDepartments(@PathVariable String id){
+			College obj = service.findById(id);
+			return ResponseEntity.ok().body(obj.getDepartments());
 	}
 	
 	@PostMapping

@@ -9,6 +9,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Document
 public class College implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -19,6 +21,7 @@ public class College implements Serializable{
 	private String name;
 	private String email;
 	
+	@JsonIgnore
 	@DBRef(lazy = true)
 	private List<Department> departments = new ArrayList<>();
 	

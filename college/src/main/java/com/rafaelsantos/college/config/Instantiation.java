@@ -36,5 +36,13 @@ public class Instantiation implements CommandLineRunner{
 		
 		repository.saveAll(Arrays.asList(hero, usb, mnk));
 		departmentRepository.saveAll(Arrays.asList(department1, department2, department3));
+		
+		hero.getDepartments().add(department1);
+		usb.getDepartments().add(department2);
+		mnk.getDepartments().add(department3);
+		
+		repository.save(hero);
+		repository.save(usb);
+		repository.save(mnk);
 	}
 }

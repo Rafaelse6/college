@@ -37,9 +37,9 @@ public class Instantiation implements CommandLineRunner{
 		Department department2 = new Department(null, "Science", "sciencedepartment@gmail.com", "Science department", usb);
 		Department department3 = new Department(null, "Math", "mathdepartment@gmail.com", "Math department", mnk);
 		
-		StudentDTO s1 = new StudentDTO(null, "Anna", 1, hero);
-		StudentDTO s2 = new StudentDTO(null, "Bob", 2, usb);
-		StudentDTO s3 = new StudentDTO(null, "Alex", 3, mnk);
+		StudentDTO s1 = new StudentDTO("Anna", 1, hero);
+		StudentDTO s2 = new StudentDTO("Bob", 2, usb);
+		StudentDTO s3 = new StudentDTO("Alex", 3, mnk);
 		
 		department1.getStudents().add(s1);
 		department2.getStudents().add(s2);
